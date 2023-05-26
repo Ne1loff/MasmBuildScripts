@@ -1,9 +1,12 @@
 param([string] $pathToFile=$(throw "Please specify a path to file (.obj)"), [string] $subsystem=$("CONSOLE"))
 
-echo "Start linking..."
+Write-Output "Start linking..."
 
 $work_dir = "C:\masm32"
-$current_path = (pwd).Path
+$bin_path = $work_dir + "\bin"
+$lib_path = $work_dir + "\lib";
+
+$current_path = Get-Location.Path
 $was_cd = $false
 if ($work_dir -ne $current_path) {
     Set-Location -Path $work_dir
@@ -11,9 +14,9 @@ if ($work_dir -ne $current_path) {
 }
 
 if ($subsystem -eq "CONSOLE") {
-    C:\masm32\bin\LINK.EXE /SUBSYSTEM:CONSOLE /RELEASE /VERSION:4.0 /LIBPATH:"C:\masm32\lib" "$pathToFile"
+    & $bin_path\LINK.EXE /SUBSYSTEM:CONSOLE /RELEASE /VERSION:4.0 /LIBPATH:"$lib_path" "$pathToFile"
 } elseif ($subsystem -eq "WINDOW") {
-    C:\masm32\bin\LINK.EXE /SUBSYSTEM:WINDOW /RELEASE /VERSION:4.0 /LIBPATH:"C:\masm32\lib" "$pathToFile"
+    & $bin_path\LINK.EXE /SUBSYSTEM:WINDOW /RELEASE /VERSION:4.0 /LIBPATH:"$lib_path" "$pathToFile"
 } else {
     throw "Only CONSOLE, WINDOW is allowed for SUBSYSTEM flag"
 }
@@ -26,7 +29,7 @@ if ($was_cd) {
     Set-Location -Path $current_path
 }
 
-echo "Linking successfully done!"
+Write-Output "Linking successfully done!"
 
 # SIG # Begin signature block
 # MIIFlAYJKoZIhvcNAQcCoIIFhTCCBYECAQExCzAJBgUrDgMCGgUAMGkGCisGAQQB

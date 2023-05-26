@@ -1,9 +1,10 @@
 param([string] $pathToFile=$(throw "Please specify a path to file (.asm)"), [string] $subsystem=$("CONSOLE"))
 
-echo "Start building..."
+Write-Output "Start building..."
 
 $work_dir = "C:\masm32"
-$current_path = (pwd).Path
+
+$current_path = Get-Location.Path
 $was_cd = $false
 if ($work_dir -ne $current_path) {
     Set-Location -Path $work_dir
@@ -18,7 +19,7 @@ if ($was_cd) {
     Set-Location -Path $current_path
 }
 
-echo "Build successfully done!"
+Write-Output "Build successfully done!"
 
 # SIG # Begin signature block
 # MIIFlAYJKoZIhvcNAQcCoIIFhTCCBYECAQExCzAJBgUrDgMCGgUAMGkGCisGAQQB
