@@ -6,7 +6,7 @@ $work_dir = "C:\masm32"
 $bin_path = $work_dir + "\bin"
 $lib_path = $work_dir + "\lib";
 
-$current_path = Get-Location.Path
+$current_path = Get-Location
 $was_cd = $false
 if ($work_dir -ne $current_path) {
     Set-Location -Path $work_dir

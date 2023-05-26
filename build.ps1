@@ -4,7 +4,7 @@ Write-Output "Start building..."
 
 $work_dir = "C:\masm32"
 
-$current_path = Get-Location.Path
+$current_path = Get-Location
 $was_cd = $false
 if ($work_dir -ne $current_path) {
     Set-Location -Path $work_dir
@@ -12,7 +12,8 @@ if ($work_dir -ne $current_path) {
 }
 
 ./compile.ps1 $pathToFile
-$pathToFile = $pathToFile.Replace(".Asm", ".obj");
+$destination = Split-Path -parent $pathToFile
+$pathToFile = $destination + "/" + [System.IO.Path]::GetFileNameWithoutExtension($pathToFile) + ".obj";
 ./link.ps1 $pathToFile
 
 if ($was_cd) {
